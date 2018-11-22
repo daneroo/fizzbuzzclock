@@ -43,8 +43,13 @@ const resolvers = {
   }
 }
 
+const onceInAWhile = 100
+let count = 0
 function publishToGQL (message) {
-  console.log('>>', message)
+  if (count % onceInAWhile === 0) {
+    console.log('>>', JSON.stringify(message))
+  }
+  count++
   pubsub.publish(MESSAGE_ADDED, message)
 }
 

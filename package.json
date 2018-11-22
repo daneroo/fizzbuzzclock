@@ -8,8 +8,8 @@
     "lint": "standard",
     "secscan": "npm audit",
     "test": "npm run lint && npm run secscan",
-    "deploy": "now --public && now alias  && now rm --safe --yes api-qcic",
-    "logs": "now logs -f $(now ls api-qcic 2>/dev/null | tail +2 | head -1 |  awk '{print $2}')"
+    "deploy": "now --public && now alias  && now rm --safe --yes fizzbuzzclock",
+    "logs": "now logs -f $(now ls fizzbuzzclock 2>/dev/null | tail +2 | head -1 |  awk '{print $2}')"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +17,8 @@
     "apollo-server": "^2.2.2",
     "apollo-server-express": "^2.2.2",
     "cors": "^2.8.5",
-    "graphql": "^14.0.2"
+    "graphql": "^14.0.2",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "standard": "^12.0.1"

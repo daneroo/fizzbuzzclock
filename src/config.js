@@ -1,6 +1,6 @@
 'use strict'
 
-const PORT = 6060
+const PORT = 7070
 // const hostname = process.env.HOSTALIAS || os.hostname()
 
 // export default {
