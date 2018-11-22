@@ -16,6 +16,7 @@ const typeDefs = gql`
 
   type Query {
     hello: String!
+    messages: [Message]
   }
 
   type Subscription {
@@ -29,6 +30,9 @@ const resolvers = {
   Query: {
     hello (root, { _noargs }, context) {
       return 'World'
+    },
+    messages (root, { _noargs }, context) {
+      return []
     }
   },
 
