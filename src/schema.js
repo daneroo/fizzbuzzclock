@@ -57,14 +57,16 @@ function publishToGQL (message) {
   pubsub.publish(MESSAGE_ADDED, message)
 }
 
-const interval = 3000
+const interval = 1000
 
 setInterval(() => {
-  const message = {
-    id: ulid(),
-    stamp: new Date().toISOString(),
-    text: '---'
-  }
+  const id = ulid()
+  const now = new Date()
+  const stamp = now.toISOString()
+  const s = now.getSeconds()
+  const text = (s % 3 ? '' : 'fizz') + (s % 5 ? '' : 'buzz') || '---'
+
+  const message = { id, stamp, text }
   publishToGQL(message)
 }, interval)
 

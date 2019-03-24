@@ -8,7 +8,7 @@
     "lint": "standard",
     "secscan": "npm audit",
     "test": "npm run lint && npm run secscan",
-    "deploy": "now --public && now alias  && now rm --safe --yes fizzbuzzclock",
+    "deploy": "now --public --target production  && now rm --safe --yes fizzbuzzclock",
     "logs": "now logs -f $(now ls fizzbuzzclock 2>/dev/null | tail +2 | head -1 |  awk '{print $2}')"
   },
   "author": "",
