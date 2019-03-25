@@ -48,10 +48,14 @@ const resolvers = {
 }
 
 const onceInAWhile = 100
+const firstFew = 16
 let count = 0
 function publishToGQL (message) {
-  if (count % onceInAWhile === 0) {
+  if (count < firstFew || count % onceInAWhile === 0) {
     console.log('>>', JSON.stringify(message))
+    if (count === firstFew - 1) {
+      console.log(`.. I will be less chatty now (% ${onceInAWhile})`)
+    }
   }
   count++
   pubsub.publish(MESSAGE_ADDED, message)

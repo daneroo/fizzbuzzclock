@@ -21,10 +21,19 @@ app.get('/health', function (req, res) {
   res.json({ status: 'OK', stamp })
 })
 
+let count = 0
 const server = new ApolloServer({
   // These will be defined for both new or existing servers
   typeDefs: schema.typeDefs,
-  resolvers: schema.resolvers
+  resolvers: schema.resolvers,
+  subscriptions: {
+    onConnect: (connectionParams, webSocket, context) => {
+      console.log({ connections: ++count })
+    },
+    onDisconnect: (webSocket, context) => {
+      console.log({ connections: --count })
+    }
+  }
 
 })
 
