@@ -5,33 +5,38 @@ const { ApolloServer } = require('apollo-server-express')
 
 const schema = require('./schema')
 const config = require('./config')
+const { fizzbuzz } = require('./fizzbuzz')
 
 const { port } = config.express
 
+let connectionCount = 0 // number of active graphql subscriptions
 const app = express()
 app.use('*', cors())
 app.get('/', function (req, res) {
-  res.json({ you: 'Home', status: 'OK', stamp: new Date().toISOString() })
+  const message = fizzbuzz() // {id, stamp,text}
+  res.json(message)
 })
 app.get('/version', function (req, res) {
   res.json(config.version)
 })
+
+const serverStartTime = new Date()
 app.get('/health', function (req, res) {
   const stamp = new Date().toISOString()
-  res.json({ status: 'OK', stamp })
+  const uptime = (+new Date() - serverStartTime) / 1000
+  res.json({ status: 'OK', stamp, connectionCount, uptime })
 })
 
-let count = 0
 const server = new ApolloServer({
   // These will be defined for both new or existing servers
   typeDefs: schema.typeDefs,
   resolvers: schema.resolvers,
   subscriptions: {
     onConnect: (connectionParams, webSocket, context) => {
-      console.log({ connections: ++count })
+      console.log({ connections: ++connectionCount })
     },
     onDisconnect: (webSocket, context) => {
-      console.log({ connections: --count })
+      console.log({ connections: --connectionCount })
     }
   }
 

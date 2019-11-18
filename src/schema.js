@@ -26,13 +26,16 @@ const typeDefs = gql`
 
 const MESSAGE_ADDED = 'MESSAGE_ADDED'
 
+const keepNMessages = 15
+const recentMessages = []
+
 const resolvers = {
   Query: {
     hello (root, { _noargs }, context) {
       return 'World'
     },
     messages (root, { _noargs }, context) {
-      return []
+      return recentMessages
     }
   },
 
@@ -58,7 +61,14 @@ function publishToGQL (message) {
     }
   }
   count++
+
   pubsub.publish(MESSAGE_ADDED, message)
+
+  recentMessages.push(message)
+  while (recentMessages.length > keepNMessages) {
+    recentMessages.shift()
+  }
+  // console.log(`keeping ${recentMessages.length} messages`)
 }
 
 const interval = 1000
