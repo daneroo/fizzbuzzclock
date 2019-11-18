@@ -1,5 +1,5 @@
 const { PubSub, gql } = require('apollo-server')
-const { ulid } = require('ulid')
+const { fizzbuzz } = require('./fizzbuzz')
 
 const pubsub = new PubSub()
 
@@ -64,13 +64,7 @@ function publishToGQL (message) {
 const interval = 1000
 
 setInterval(() => {
-  const id = ulid()
-  const now = new Date()
-  const stamp = now.toISOString()
-  const s = now.getSeconds()
-  const text = (s % 3 ? '' : 'fizz') + (s % 5 ? '' : 'buzz') || '---'
-
-  const message = { id, stamp, text }
+  const message = fizzbuzz()
   publishToGQL(message)
 }, interval)
 
