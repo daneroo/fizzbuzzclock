@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.9.9",
-    "apollo-server-express": "^2.9.9",
+    "apollo-server-express": "^2.14.2",
     "cors": "^2.8.5",
     "graphql": "^14.5.8",
     "ulid": "^2.3.0"
